@@ -1,0 +1,15 @@
+# Núcleo
+openai>=1.52.0
+openai-agents>=0.2.9
+
+# Utilidades
+python-dotenv>=1.0.1
+rich>=13.7.1
+IPython>=8.27.0
+pandas>=2.2.0
+yfinance>=0.2.54
+
+# Azure librerias Standalone
+azure-identity>=1.17.1          # credenciales administradas/ClientSecretCredential
+azure-keyvault-secrets>=4.8.0   # leer secretos de Key Vault
+azure-storage-blob>=12.21.0     # blobs de Storage
