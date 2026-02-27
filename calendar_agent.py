@@ -75,10 +75,10 @@ def authenticate_google_calendar():
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            # AQUÍ es donde tu código lee el archivo credentials.json que acabas de descargar
+            # AQUÍ es donde el código lee el archivo credentials.json que se acaba de descargar
             flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
             
-            # Esto abrirá una pestaña en tu navegador web
+            # Esto abrirá una pestaña en el navegador web
             creds = flow.run_local_server(port=0)
         
         # Guarda el token generado para que el agente lo use automáticamente después
@@ -96,6 +96,7 @@ import os
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 
+# CREAR UN EVENTO EN EL CALENDARIO ----------------------------------
 @function_tool
 def create_calendar_event(summary: str, start_time: str, end_time: str, description: str = "") -> str:
     """
@@ -149,6 +150,7 @@ from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 import os
 
+# VERIFICAR DISPONIBILIDAD EN EL CALENDARIO ----------------------------------
 @function_tool
 def check_calendar_availability(start_time: str, end_time: str) -> str:
     """
@@ -194,6 +196,7 @@ def check_calendar_availability(start_time: str, end_time: str) -> str:
 
 import unicodedata
 
+# ELIMINAR UN EVENTO DEL CALENDARIO ----------------------------------
 @function_tool
 def delete_calendar_event(event_summary: str, date_iso: str) -> str:
     """
@@ -246,7 +249,7 @@ def delete_calendar_event(event_summary: str, date_iso: str) -> str:
                 event_to_delete = event
                 break
         
-        # AQUÍ ESTÁ LA MAGIA: Si la IA se equivoca, le pasamos los datos reales para que se corrija
+        # Si la IA se equivoca, le pasamos los datos reales para que se corrija
         if not event_to_delete:
             nombres_reales = [e.get('summary', 'Sin título') for e in events]
             return f"No se encontró '{event_summary}'. Los eventos reales que tienes este día son: {', '.join(nombres_reales)}. Vuelve a intentarlo usando uno de estos nombres exactos."
@@ -278,7 +281,7 @@ calendar_assistant = Agent(
         "6. CÁLCULO DE FECHAS ESTRICTO: Cuando debas consultar rangos de tiempo largos (como un mes completo), asegúrate de calcular correctamente el último día del mes. Verifica si el año es bisiesto antes de asignar el día 29 a febrero (ej. 2026 NO es bisiesto, febrero tiene 28 días). Nunca envíes fechas matemáticamente inválidas a las herramientas y asegúrate de que la fecha de inicio sea siempre anterior a la fecha de fin."
         "7. CONFIRMACIÓN: Una vez creado el evento con éxito, responde de manera concisa proporcionando confirmacion a las acciones realizadas (eliminaciones, creaciones o reprogramaciones) y el enlace al evento."        
     ),
-    # ¡Agregamos la nueva tool a la lista!
+    # Agregamos la nueva tool a la lista
     tools=[get_current_date, check_calendar_availability, create_calendar_event, delete_calendar_event], 
     model=OpenAIChatCompletionsModel(model=MODEL_NAME, openai_client=client),
 )
