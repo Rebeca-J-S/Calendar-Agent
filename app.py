@@ -21,7 +21,7 @@ if prompt := st.chat_input("¿Qué agendamos hoy?"):
     with st.chat_message("user"):
         st.markdown(prompt)
         
-    # --- LA MAGIA DE LA MEMORIA EMPIEZA AQUÍ ---
+    # MEMORIA DE LA CONVERZACIÓN ------------------------------------------------
     # 1. Recorremos los mensajes anteriores para armar un "resumen" de la charla
     historial_texto = "Historial de la conversación:\n"
     for msg in st.session_state.messages[-6:]: # Tomamos solo los últimos 6 mensajes para no saturar al modelo
@@ -30,7 +30,7 @@ if prompt := st.chat_input("¿Qué agendamos hoy?"):
         
     # 2. Unimos el historial con el mensaje actual para darle todo el contexto al agente
     prompt_con_memoria = f"{historial_texto}\nUsuario: {prompt}\n\n(Instrucción: Responde a la última petición del usuario teniendo en cuenta el contexto del historial)."
-    # --- FIN DE LA MAGIA ---
+    # ---------------------------------------------------------------------------
 
     # Guardamos el mensaje en Streamlit
     st.session_state.messages.append({"role": "user", "content": prompt})
