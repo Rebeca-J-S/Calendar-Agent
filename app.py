@@ -3,7 +3,8 @@ import asyncio
 from calendar_agent import calendar_assistant, Runner
 
 st.set_page_config(page_title="Calendar AI", page_icon="🗓️")
-st.title("Asistente de Google Calendar")
+st.title("Calendar AI")
+st.subheader("Tu asistente personal para gestionar tu calendario")
 
 # Inicializamos el estado de los mensajes
 if "messages" not in st.session_state:
