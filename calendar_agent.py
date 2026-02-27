@@ -42,6 +42,7 @@ client = AsyncAzureOpenAI(
 MODEL_NAME = deployment
 SCOPES = ['https://www.googleapis.com/auth/calendar.events']
 
+# AUTENTICACIÓN Y CONFIGURACIÓN DE GOOGLE CALENDAR ------------------------------------------------------
 def authenticate_google_calendar():
     """Maneja la autenticación OAuth 2.0 y genera o refresca token.json."""
     creds = None
@@ -64,14 +65,14 @@ def authenticate_google_calendar():
 # Inicializar autenticación al cargar el módulo
 authenticate_google_calendar()
 
-
+# OBTENCIÓN DE FECHA ACTUAL ------------------------------------------------------
 @function_tool
 def get_current_date() -> str:
     """Obtiene la fecha y hora actual exacta en la zona horaria UTC-4."""
     tz_local = timezone(timedelta(hours=-4))
     return datetime.now(tz_local).strftime("%Y-%m-%d %H:%M:%S")
 
-
+# CREAR EVENTO EN CALENDARIO ------------------------------------------------------
 @function_tool
 def create_calendar_event(summary: str, start_time: str, end_time: str, description: str = "") -> str:
     """Crea un nuevo evento en el Google Calendar principal."""
@@ -95,7 +96,7 @@ def create_calendar_event(summary: str, start_time: str, end_time: str, descript
     except Exception as e:
         return f"Error al crear el evento: {str(e)}"
 
-
+# VERIFICAR DISPONIBILIDAD EN CALENDARIO ------------------------------------------------------
 @function_tool
 def check_calendar_availability(start_time: str, end_time: str) -> str:
     """Verifica si hay eventos programados en un rango de tiempo específico."""
@@ -130,7 +131,7 @@ def check_calendar_availability(start_time: str, end_time: str) -> str:
     except Exception as e:
         return f"Error al leer el calendario: {str(e)}"
 
-
+# ELIMINAR EVENTO EN CALENDARIO ------------------------------------------------------
 @function_tool
 def delete_calendar_event(event_summary: str, date_iso: str) -> str:
     """Busca un evento por su título exacto o aproximado en una fecha y lo elimina."""
