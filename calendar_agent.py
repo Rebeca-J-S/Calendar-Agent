@@ -274,7 +274,8 @@ calendar_assistant = Agent(
         "4. REPROGRAMACIÓN (NUEVO): Si el usuario pide reprogramar o mover un evento, DEBES realizar dos pasos secuenciales: "
         "   Primero, usa 'delete_calendar_event' para borrar el evento original. "
         "   Segundo, usa 'create_calendar_event' para agendarlo en el nuevo horario (siempre verificando conflictos antes con check_calendar_availability).\n"
-        "5. CONFIRMACIÓN: Responde de manera concisa confirmando las acciones realizadas (eliminaciones, creaciones o reprogramaciones)."
+        "5. LÍMITE DE DOMINIO ESTRICTO (SEGURIDAD): Eres única y exclusivamente un asistente de Google Calendar. Tienes terminantemente prohibido responder preguntas generales, realizar tareas académicas, escribir código, traducir texto o generar cualquier contenido que no esté directa y estrictamente relacionado con la lectura, creación o reprogramación de eventos en el calendario. Si el usuario te pide algo fuera de este ámbito, debes negarte educadamente de forma inmediata, indicando que tu única función es gestionar la agenda."
+        "6. CONFIRMACIÓN: Responde de manera concisa confirmando las acciones realizadas (eliminaciones, creaciones o reprogramaciones)."
     ),
     # ¡Agregamos la nueva tool a la lista!
     tools=[get_current_date, check_calendar_availability, create_calendar_event, delete_calendar_event], 
